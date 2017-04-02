@@ -203,10 +203,10 @@ def read_data_sets(train_dir,
     test = fake()
     return base.Datasets(train=train, validation=validation, test=test)
 
-  TRAIN_IMAGES = '64/train/data.dat'
-  TRAIN_LABELS = '64/train/idx.dat'
-  TEST_IMAGES = '64/test/data.dat'
-  TEST_LABELS = '64/test/idx.dat'
+  TRAIN_IMAGES = '64/Train/data.dat'
+  TRAIN_LABELS = '64/Train/idx.dat'
+  TEST_IMAGES = '64/Test/data.dat'
+  TEST_LABELS = '64/Test/idx.dat'
 
   with open(TRAIN_IMAGES, 'rb') as f:
     train_images = extract_images(f)
