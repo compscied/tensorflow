@@ -140,7 +140,7 @@ class DataSet(object):
     self._images = images
     self._labels = labels
     self._epochs_completed = 0
-    self._index_in_epoch = 0
+    self._index_in_epoch = self._num_examples + 1 # force shuffle in first batch
 
   @property
   def images(self):
