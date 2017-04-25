@@ -1,19 +1,14 @@
-#from tensorflow.examples.tutorials.mnist import input_data
-#mnist = input_data.read_data_sets('MNIST_data', one_hot=True)
-#image_width = 28
-#image_height = 28
-#categories = 10
-
+#Original code from google MNIST tutorial modified for Embryos by DPS2018 Team 2
 from datetime import datetime
 
 # Load embryo images instead of mnist
 from mnistembryo import read_data_sets
-mnist = read_data_sets('', one_hot=True)
+embryos = read_data_sets('', one_hot=True)
 image_width = 64
 image_height = 64
 categories = 4
 
-image_size = image_width*image_height # 28x28=784, 64x64=4096
+image_size = image_width*image_height # 64x64=4096
 
 import tensorflow as tf
 
@@ -83,7 +78,7 @@ start_time=datetime.now()
 
 for i in range(100000):
 #for i in range(1000):
-  batch = mnist.train.next_batch(480)
+  batch = embryos.train.next_batch(480)
   if i%100 == 0:
 
     end_time = datetime.now()
@@ -92,12 +87,10 @@ for i in range(100000):
     train_accuracy = accuracy.eval(feed_dict={
         x:batch[0], y_: batch[1], keep_prob: 1.0})
 
-    test_batch = mnist.test.next_batch(3000)
+    test_batch = embryos.test.next_batch(3000)
 
     test_accuracy = accuracy.eval(feed_dict={
       x: test_batch[0], y_: test_batch[1], keep_prob: 1.0})
-#    test_accuracy = accuracy.eval(feed_dict={
-#      x: mnist.test.images, y_: mnist.test.labels, keep_prob: 1.0})
 
     print("%s: step %d, training accuracy %g, test accuracy %g"%(time_delta, i, train_accuracy, test_accuracy))
 

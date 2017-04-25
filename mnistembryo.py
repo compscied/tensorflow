@@ -11,9 +11,11 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+#
+# Modified for Embryo Data by DPS2018 Team 2
 # ==============================================================================
 
-"""Functions for downloading and reading MNIST data."""
+"""Functions for downloading and reading Embryo data."""
 
 from __future__ import absolute_import
 from __future__ import division
@@ -26,9 +28,6 @@ from six.moves import xrange  # pylint: disable=redefined-builtin
 
 from tensorflow.contrib.learn.python.learn.datasets import base
 from tensorflow.python.framework import dtypes
-
-SOURCE_URL = 'http://yann.lecun.com/exdb/mnist/'
-
 
 def _read32(bytestream):
   dt = numpy.dtype(numpy.uint32).newbyteorder('>')
@@ -49,11 +48,11 @@ def extract_images(f):
 
   """
   print('Extracting', f.name)
-#  with gzip.GzipFile(fileobj=f) as bytestream:
+  #with gzip.GzipFile(fileobj=f) as bytestream:
   with f as bytestream:
     magic = _read32(bytestream)
     if magic != 2051:
-      raise ValueError('Invalid magic number %d in MNIST image file: %s' %
+      raise ValueError('Invalid magic number %d in EMBRYO image file: %s' %
                        (magic, f.name))
     num_images = _read32(bytestream)
     rows = _read32(bytestream)
@@ -91,7 +90,7 @@ def extract_labels(f, one_hot=False, num_classes=4):
   with f as bytestream:
     magic = _read32(bytestream)
     if magic != 2049:
-      raise ValueError('Invalid magic number %d in MNIST label file: %s' %
+      raise ValueError('Invalid magic number %d in EMBRYO label file: %s' %
                        (magic, f.name))
     num_items = _read32(bytestream)
     buf = bytestream.read(num_items)
@@ -203,10 +202,10 @@ def read_data_sets(train_dir,
     test = fake()
     return base.Datasets(train=train, validation=validation, test=test)
 
-  TRAIN_IMAGES = '64/Train/Data.dat'
-  TRAIN_LABELS = '64/Train/Idx.dat'
-  TEST_IMAGES = '64/Test/Data.dat'
-  TEST_LABELS = '64/Test/Idx.dat'
+  TRAIN_IMAGES = '64/Train/Data.dat.gz'
+  TRAIN_LABELS = '64/Train/Idx.dat.gz'
+  TEST_IMAGES = '64/Test/Data.dat.gz'
+  TEST_LABELS = '64/Test/Idx.dat.gz'
 
   with open(TRAIN_IMAGES, 'rb') as f:
     train_images = extract_images(f)
@@ -240,5 +239,3 @@ def read_data_sets(train_dir,
   return base.Datasets(train=train, validation=validation, test=test)
 
 
-def load_mnist(train_dir='MNIST-data'):
-  return read_data_sets(train_dir)
